@@ -343,19 +343,22 @@ class ChainCashSpec extends PropSpec with Matchers with ScalaCheckDrivenProperty
     val aPosition = 0L
     val aValue = 100L
     val msg0: Array[Byte] = Longs.toByteArray(aPosition) ++ Longs.toByteArray(100) ++ Base16.decode(noteTokenId).get
-    val sig0 = SigUtils.sign(msg0, reserveASecret)
+    //val sig0 = SigUtils.sign(msg0, reserveASecret)
+    val sig0 = SigUtils.forge(msg0, reserveAPk)
     val sig0Bytes = GroupElementSerializer.toBytes(sig0._1) ++ sig0._2.toByteArray
 
     val bPosition = 1L
     val bValue = 50L
     val msg1: Array[Byte] = Longs.toByteArray(bPosition) ++ Longs.toByteArray(bValue) ++ Base16.decode(noteTokenId).get
-    val sig1 = SigUtils.sign(msg1, reserveBSecret)
+    //val sig1 = SigUtils.sign(msg1, reserveBSecret)
+    val sig1 = SigUtils.forge(msg1, reserveBPk)
     val sig1Bytes = GroupElementSerializer.toBytes(sig1._1) ++ sig1._2.toByteArray
 
     val finalNoteValue = 1
     val cPosition = 2L
     val msg2: Array[Byte] = Longs.toByteArray(cPosition) ++ Longs.toByteArray(finalNoteValue) ++ Base16.decode(noteTokenId).get
-    val sig2 = SigUtils.sign(msg2, reserveCSecret)
+    //val sig2 = SigUtils.sign(msg2, reserveCSecret)
+    val sig2 = SigUtils.forge(msg2, reserveCPk)
     val sig2Bytes = GroupElementSerializer.toBytes(sig2._1) ++ sig2._2.toByteArray
 
     val plasmaMap = new PlasmaMap[Array[Byte], Array[Byte]](AvlTreeFlags.InsertOnly, PlasmaParameters.default)
